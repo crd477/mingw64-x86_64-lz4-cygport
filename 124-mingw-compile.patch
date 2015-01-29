@@ -1,0 +1,22 @@
+--- origsrc/lz4-ca353cfe6e6ed078501774f0a25d2eb8190036c9/programs/lz4cli.c	2014-11-06 12:39:42.000000000 -0600
++++ src/lz4-ca353cfe6e6ed078501774f0a25d2eb8190036c9/programs/lz4cli.c	2015-01-21 01:53:41.397051900 -0600
+@@ -76,7 +76,7 @@
+ #if defined(MSDOS) || defined(OS2) || defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__)
+ #  include <fcntl.h>    // _O_BINARY
+ #  include <io.h>       // _setmode, _isatty
+-#  ifdef __MINGW32__
++#  if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
+    int _fileno(FILE *stream);   // MINGW somehow forgets to include this windows declaration into <stdio.h>
+ #  endif
+ #  define SET_BINARY_MODE(file) _setmode(_fileno(file), _O_BINARY)
+--- origsrc/lz4-ca353cfe6e6ed078501774f0a25d2eb8190036c9/programs/lz4io.c	2014-11-06 12:39:42.000000000 -0600
++++ src/lz4-ca353cfe6e6ed078501774f0a25d2eb8190036c9/programs/lz4io.c	2015-01-21 01:53:21.935580600 -0600
+@@ -62,7 +62,7 @@
+ #if defined(MSDOS) || defined(OS2) || defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__)
+ #  include <fcntl.h>    // _O_BINARY
+ #  include <io.h>       // _setmode, _isatty
+-#  ifdef __MINGW32__
++#  if defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR)
+    int _fileno(FILE *stream);   // MINGW somehow forgets to include this windows declaration into <stdio.h>
+ #  endif
+ #  define SET_BINARY_MODE(file) _setmode(_fileno(file), _O_BINARY)
