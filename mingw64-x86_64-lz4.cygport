@@ -2,26 +2,20 @@ CROSS_HOST="x86_64-w64-mingw32"
 inherit cross
 
 NAME="mingw64-x86_64-lz4"
-VERSION=124
+VERSION=131
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="LZ4 de/compressor for Win64 toolchain"
 DESCRIPTION="LZ4 is an LZ77-type compressor with a fixed, byte-oriented
 encoding. The most important design principle behind LZ4 is simplicity."
-HOMEPAGE="https://code.google.com/p/lz4/"
-commit=ca353cfe6e6ed078501774f0a25d2eb8190036c9
-SRC_URI="https://github.com/Cyan4973/lz4/archive/${commit}/lz4-${commit}.tar.gz"
-SRC_DIR="lz4-${commit}"
+HOMEPAGE="https://cyan4973.github.io/lz4/"
+SRC_URI="https://github.com/Cyan4973/lz4/archive/r${VERSION}/lz4-r${VERSION}.tar.gz"
+SRC_DIR="lz4-r${VERSION}"
 PATCH_URI="
-	124-mingw-compile.patch
-	124-mingw-dll.patch
-	124-mingw-install.patch
+	131-mingw-compile.patch
+	131-mingw-dll.patch
+	131-mingw-install.patch
 "
-
-CYGPORT_USE_UNSTABLE_API=1
-src_unpack_hook() {
-	make -n -p | grep -q "VERSION = ${VERSION}" || error "Version mismatch"
-}
 
 src_compile() {
 	lndirs
@@ -33,5 +27,5 @@ src_install() {
 	cd ${B}
 	cyginstall PREFIX=${CROSS_PREFIX}
 
-	rm -f ${D}${CROSS_BINDIR}/lz4* ${D}${CROSS_DATADIR}/man/man1/*
+	rm -f ${D}${CROSS_BINDIR}/{,un}lz4* ${D}${CROSS_DATADIR}/man/man1/*
 }
