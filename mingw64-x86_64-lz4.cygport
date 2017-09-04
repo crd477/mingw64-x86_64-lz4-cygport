@@ -1,31 +1,36 @@
 CROSS_HOST="x86_64-w64-mingw32"
-inherit cross
+inherit cross cmake
 
 NAME="mingw64-x86_64-lz4"
-VERSION=131
+VERSION=1.7.5
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="LZ4 de/compressor for Win64 toolchain"
 DESCRIPTION="LZ4 is an LZ77-type compressor with a fixed, byte-oriented
 encoding. The most important design principle behind LZ4 is simplicity."
-HOMEPAGE="https://cyan4973.github.io/lz4/"
-SRC_URI="https://github.com/Cyan4973/lz4/archive/r${VERSION}/lz4-r${VERSION}.tar.gz"
-SRC_DIR="lz4-r${VERSION}"
+HOMEPAGE="https://lz4.github.io/lz4/"
+SRC_URI="https://github.com/lz4/lz4/archive/v${VERSION}/lz4-v${VERSION}.tar.gz"
+SRC_DIR="lz4-${VERSION}"
 PATCH_URI="
-	131-mingw-compile.patch
-	131-mingw-dll.patch
-	131-mingw-install.patch
+	1.7.5-cmake-install.patch
+"
+
+CYGCMAKE_ARGS="
+	-DBUILD_SHARED_LIBS=ON
+	-DBUILD_STATIC_LIBS=ON
+	-DCMAKE_SHARED_LIBRARY_NAME_WITH_VERSION=ON
 "
 
 src_compile() {
-	lndirs
 	cd ${B}
-	cygmake CC=${CC} CFLAGS="${CFLAGS}" EXT=".exe"
+	CYGCMAKE_SOURCE="${S}/contrib/cmake_unofficial" \
+	cygcmake
+	cygmake
 }
 
 src_install() {
 	cd ${B}
-	cyginstall PREFIX=${CROSS_PREFIX}
+	cyginstall
 
 	rm -f ${D}${CROSS_BINDIR}/{,un}lz4* ${D}${CROSS_DATADIR}/man/man1/*
 }
