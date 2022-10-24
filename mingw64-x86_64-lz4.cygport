@@ -2,7 +2,7 @@ CROSS_HOST="x86_64-w64-mingw32"
 inherit cross cmake
 
 NAME="mingw64-x86_64-lz4"
-VERSION=1.7.5
+VERSION=1.9.4
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="LZ4 de/compressor for Win64 toolchain"
@@ -11,9 +11,9 @@ encoding. The most important design principle behind LZ4 is simplicity."
 HOMEPAGE="https://lz4.github.io/lz4/"
 SRC_URI="https://github.com/lz4/lz4/archive/v${VERSION}/lz4-v${VERSION}.tar.gz"
 SRC_DIR="lz4-${VERSION}"
-PATCH_URI="
-	1.7.5-cmake-install.patch
-"
+LICENSE="BSD-2-Clause AND GPL-2.0"
+LICENSE_SPDX="SPDX-License-Identifier: BSD-2-Clause AND GPL-2.0"
+LICENSE_URI=LICENSE
 
 CYGCMAKE_ARGS="
 	-DBUILD_SHARED_LIBS=ON
@@ -23,7 +23,7 @@ CYGCMAKE_ARGS="
 
 src_compile() {
 	cd ${B}
-	CYGCMAKE_SOURCE="${S}/contrib/cmake_unofficial" \
+	CYGCMAKE_SOURCE="${S}/build/cmake" \
 	cygcmake
 	cygmake
 }
