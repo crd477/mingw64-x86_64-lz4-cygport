@@ -14,6 +14,7 @@ SRC_DIR="lz4-${VERSION}"
 LICENSE="BSD-2-Clause AND GPL-2.0"
 LICENSE_SPDX="SPDX-License-Identifier: BSD-2-Clause AND GPL-2.0"
 LICENSE_URI=LICENSE
+DIFF_EXCLUDES="doc/lz4_manual.html doc/lz4frame_manual.html"
 
 CYGCMAKE_ARGS="
 	-DBUILD_SHARED_LIBS=ON
@@ -31,6 +32,7 @@ src_compile() {
 src_install() {
 	cd ${B}
 	cyginstall
+  dodoc ${S}/doc/lz4_manual.html ${S}/doc/lz4frame_manual.html
 
 	rm -f ${D}${CROSS_BINDIR}/{,un}lz4* ${D}${CROSS_DATADIR}/man/man1/*
 }
